@@ -350,7 +350,7 @@ async function refreshShared(){
   const l=await fetchShared(); if(!l) return;
   shared=true; setBoard(sortTop(l).slice(0,10));
   // keep the list alive (the server keeps messages for about 12 hours)
-  if(location.hash==='#board'&&l.length&&Date.now()-lastSharedAt>5*3600*1000){ lastSharedAt=Date.now(); publishShared(l).catch(()=>{}); }
+  if(/board/i.test(location.hash+location.search)&&l.length&&Date.now()-lastSharedAt>5*3600*1000){ lastSharedAt=Date.now(); publishShared(l).catch(()=>{}); }
 }
 
 const downloads=true;
@@ -401,7 +401,7 @@ function renderTop(){
     $('#quit').onclick = goStart;
   } else {
     tr.innerHTML = `<button class="ghost" id="toBoard">\u0634\u0627\u0634\u0629 \u0627\u0644\u0645\u062a\u0635\u062f\u0631\u064a\u0646</button>`;
-    $('#toBoard').onclick = ()=>{window.open(location.pathname+'#board','mustakshif_board')||(location.hash='board');};
+    $('#toBoard').onclick = ()=>{location.hash='board';};
   }
   const rail = $('#rail');
   if(S&&S.region){
@@ -433,7 +433,7 @@ function mapSVG(){
   return s+'</svg>';
 }
 function goStart(){
-  clearTimers(); S=null; if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+  clearTimers(); S=null; if(location.hash||location.search) history.replaceState(null,'',location.pathname);
   renderTop(); pushPresence();
   stage.innerHTML = `<section class="start">
     <div>
@@ -715,7 +715,7 @@ function showBoard(){
   peerListeners.clear(); peerListeners.add(drawLive); drawLive();
 }
 
-function route(){ if(location.hash==='#board') showBoard(); else if(!S) goStart(); }
+function route(){ if(/board/i.test(location.hash)||/board/i.test(location.search)) showBoard(); else if(!S) goStart(); }
 window.addEventListener('hashchange',route);
 route();
 refreshShared(); setInterval(refreshShared,8000);
