@@ -1,9 +1,12 @@
-
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script>
+/* ===== SHARED LEADERBOARD: put your jsonblob ID between the quotes ===== */
+window.BOARD_ID = '01a0de85-217d-74a7-b4f3-ba04d8df69c2';
+</script>
 <title>&#x645;&#x633;&#x62a;&#x643;&#x634;&#x641; &#x627;&#x644;&#x648;&#x637;&#x646;</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +24,7 @@ html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
 *{box-sizing:border-box}
 button{font:inherit;color:inherit;cursor:pointer}
+button:focus{outline:none}
 button:focus-visible,[tabindex]:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 .app{min-height:100%;display:flex;flex-direction:column;padding-inline:16px;padding-block:0 28px;max-width:1120px;margin:0 auto}
 
@@ -40,7 +44,7 @@ button:focus-visible,[tabindex]:focus-visible,input:focus-visible{outline:3px so
 .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surf);border-radius:999px;padding:6px 14px;font-variant-numeric:tabular-nums;font-weight:700}
 .chip small{color:var(--muted);font-weight:500}
 .ghost{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;color:var(--muted);font-size:14px}
-.ghost:hover{color:var(--ink);border-color:var(--muted)}
+@media (hover:hover){.ghost:hover{color:var(--ink);border-color:var(--muted)}}
 
 .rail{display:flex;gap:6px;margin-block:4px 18px;list-style:none;padding:0}
 .rail li{flex:1;display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);min-width:0}
@@ -67,8 +71,9 @@ p{margin:0}
 .tile rect{fill:var(--surf2);stroke:var(--line);stroke-width:1.5;transition:fill .2s}
 .tile text{fill:var(--ink);font-family:var(--display);font-size:15px;font-weight:600;pointer-events:none}
 .tile{cursor:pointer;outline:none}
-.tile:hover rect,.tile:focus-visible rect{fill:var(--gold)}
-.tile:hover text,.tile:focus-visible text{fill:var(--gold-ink)}
+@media (hover:hover){.tile:hover rect{fill:var(--gold)}.tile:hover text{fill:var(--gold-ink)}}
+.tile:focus-visible rect{fill:var(--gold)}
+.tile:focus-visible text{fill:var(--gold-ink)}
 .desert rect{fill:none;stroke:var(--line);stroke-dasharray:4 5}
 .desert text{fill:var(--muted);font-size:13px;font-family:var(--body)}
 .maplegend{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-top:8px}
@@ -96,7 +101,7 @@ p{margin:0}
 .opts{display:grid;gap:10px;grid-template-columns:1fr}
 @media (min-width:600px){.opts{grid-template-columns:1fr 1fr}}
 .opt{min-height:60px;text-align:start;background:var(--surf2);border:1.5px solid var(--line);border-radius:14px;padding:12px 18px;font-size:18px;font-weight:500;transition:border-color .15s,background .15s}
-.opt:hover:not(:disabled){border-color:var(--gold)}
+@media (hover:hover){.opt:hover:not(:disabled){border-color:var(--gold)}}
 .opt.right{background:color-mix(in srgb,var(--ok) 22%,var(--surf2));border-color:var(--ok)}
 .opt.wrong{background:color-mix(in srgb,var(--bad) 20%,var(--surf2));border-color:var(--bad)}
 .opt:disabled{cursor:default}
@@ -116,7 +121,7 @@ p{margin:0}
 .clues li.locked{color:var(--muted);border-style:dashed}
 
 /* puzzle */
-.puzzle{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:min(100%,380px);aspect-ratio:1;max-width:100%;margin-inline:auto;background:var(--line);padding:4px;border-radius:14px}
+.puzzle{direction:ltr;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:min(100%,380px);aspect-ratio:1;max-width:100%;margin-inline:auto;background:var(--line);padding:4px;border-radius:14px}
 .puzzle{grid-template-rows:repeat(3,1fr)}
 .pc{position:relative;border:0;border-radius:6px;background-size:300% 300%;background-repeat:no-repeat;padding:0;min-height:0;touch-action:manipulation;transition:transform .15s,outline-color .15s;outline:3px solid transparent}
 .pc.sel{outline-color:var(--gold);transform:scale(.94)}
@@ -133,7 +138,7 @@ p{margin:0}
   background:radial-gradient(circle,var(--surf2) 0 18%,transparent 19%)}
 .compass .dot{position:absolute;inset:0;margin:auto;width:66px;height:66px;display:grid;place-items:center;text-align:center;font-size:12px;font-weight:700;color:var(--gold);line-height:1.2}
 .cbtn{position:absolute;width:74px;height:48px;margin:-24px -37px;border-radius:12px;background:var(--surf2);border:1.5px solid var(--line);font-size:14px;font-weight:700;line-height:1.1;padding:2px}
-.cbtn:hover:not(:disabled){border-color:var(--gold)}
+@media (hover:hover){.cbtn:hover:not(:disabled){border-color:var(--gold)}}
 .cbtn.right{background:color-mix(in srgb,var(--ok) 25%,var(--surf2));border-color:var(--ok)}
 .cbtn.wrong{background:color-mix(in srgb,var(--bad) 22%,var(--surf2));border-color:var(--bad)}
 
@@ -141,7 +146,7 @@ p{margin:0}
 .paths{display:grid;gap:14px;grid-template-columns:1fr}
 @media (min-width:700px){.paths{grid-template-columns:repeat(3,1fr)}}
 .pathbtn{text-align:start;background:var(--surf2);border:1.5px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px;min-height:170px}
-.pathbtn:hover{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 8%,var(--surf2))}
+@media (hover:hover){.pathbtn:hover{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 8%,var(--surf2))}}
 .pathbtn b{font-family:var(--display);font-size:26px;color:var(--gold);font-weight:600}
 .pathbtn span{color:var(--muted)}
 .glyph{width:44px;height:44px}
@@ -321,6 +326,24 @@ let idleTimer = null;
 
 /* ============ capabilities ============ */
 let db=null, localBoard=[];
+const BOARD_URL=(window.BOARD_ID||'').trim()?'https://jsonblob.com/api/jsonBlob/'+String(window.BOARD_ID).trim().replace(/[^A-Za-z0-9-]/g,''):'';
+let shared=false;
+const sortTop=l=>l.filter(r=>r&&typeof r.score==='number').sort((a,b)=>b.score-a.score);
+async function fetchShared(){
+  if(!BOARD_URL) return null;
+  try{const r=await fetch(BOARD_URL+'?t='+Date.now(),{cache:'no-store',headers:{Accept:'application/json'}}); if(!r.ok) return null;
+    const j=await r.json(); return Array.isArray(j&&j.scores)?j.scores:[];}catch(e){return null}
+}
+async function pushShared(entry){
+  if(!BOARD_URL) return false;
+  try{const cur=await fetchShared(); if(cur===null) return false;
+    const clean={name:String(entry.name).slice(0,20),region:entry.region,path:entry.path,title:entry.title,score:entry.score,at:entry.at};
+    const top=sortTop([...cur,clean]).slice(0,100);
+    const r=await fetch(BOARD_URL,{method:'PUT',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({scores:top})});
+    return r.ok;}catch(e){return false}
+}
+async function refreshShared(){ const l=await fetchShared(); if(l){shared=true; setBoard(sortTop(l).slice(0,10));} }
+
 const downloads=true;
 const readLocal=()=>{try{return JSON.parse(localStorage.getItem('mustakshif_scores')||'[]')}catch(e){return []}};
 localBoard=readLocal();
@@ -330,7 +353,7 @@ function setBoard(list){board=list;boardListeners.forEach(f=>f());}
 function saveLocal(entry){
   localBoard=readLocal(); localBoard.push(entry); localBoard.sort((a,b)=>b.score-a.score); localBoard=localBoard.slice(0,50);
   try{localStorage.setItem('mustakshif_scores',JSON.stringify(localBoard))}catch(e){}
-  setBoard(localBoard.slice(0,10)); bc&&bc.postMessage({type:'scores'});
+  if(!shared) setBoard(localBoard.slice(0,10)); bc&&bc.postMessage({type:'scores'});
 }
 // Live link between the game window and the leaderboard window on the same computer
 let bc=null; try{bc=new BroadcastChannel('mustakshif')}catch(e){}
@@ -348,9 +371,9 @@ function refreshPeers(){
   peerListeners.forEach(f=>f());
 }
 setInterval(refreshPeers,5000);
-if(bc) bc.onmessage=e=>{const m=e.data||{}; if(m.type==='scores') setBoard(readLocal().slice(0,10)); if(m.type==='presence') gotPeer(m);};
+if(bc) bc.onmessage=e=>{const m=e.data||{}; if(m.type==='scores') (shared?refreshShared():setBoard(readLocal().slice(0,10))); if(m.type==='presence') gotPeer(m);};
 window.addEventListener('storage',e=>{
-  if(e.key==='mustakshif_scores') setBoard(readLocal().slice(0,10));
+  if(e.key==='mustakshif_scores') (shared?refreshShared():setBoard(readLocal().slice(0,10)));
   if(e.key==='mustakshif_now'&&e.newValue){try{gotPeer(JSON.parse(e.newValue))}catch(_){}}
 });
 function pushPresence(){
@@ -634,8 +657,11 @@ function showResult(){
     const name=($('#pname').value||'').trim().slice(0,20)||'\u0632\u0627\u0626\u0631';
     const entry={name,region:S.region.name,path:PATHS[S.path].label,title,score:S.score,at:Date.now()};
     $('#saveScore').disabled=true; S.name=name; pushPresence();
+    const okShared=await pushShared(entry);
     saveLocal(entry);
-    let msg='\u062a\u0645 \u062a\u0633\u062c\u064a\u0644 \u0646\u062a\u064a\u062c\u062a\u0643!';
+    if(okShared) await refreshShared();
+    let msg=(BOARD_URL&&!okShared)?'\u062a\u0639\u0630\u0651\u0631 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u062a\u0635\u062f\u0631\u064a\u0646 \u0627\u0644\u0645\u0634\u062a\u0631\u0643\u0629\u060c \u062d\u064f\u0641\u0638\u062a \u0646\u062a\u064a\u062c\u062a\u0643 \u0639\u0644\u0649 \u0647\u0630\u0627 \u0627\u0644\u062c\u0647\u0627\u0632. ':'';
+    msg+='\u062a\u0645 \u062a\u0633\u062c\u064a\u0644 \u0646\u062a\u064a\u062c\u062a\u0643!';
     const rank=[...board,entry].sort((a,b)=>b.score-a.score).findIndex(r=>r===entry||(r.at===entry.at&&r.name===entry.name))+1;
     $('#saveMsg').className='feedback good'; $('#saveMsg').textContent=msg+(rank&&rank<=10?' \u062a\u0631\u062a\u064a\u0628\u0643 \u0627\u0644\u062d\u0627\u0644\u064a: '+rank:'');
     armIdle();
@@ -683,6 +709,7 @@ function showBoard(){
 function route(){ if(location.hash==='#board') showBoard(); else if(!S) goStart(); }
 window.addEventListener('hashchange',route);
 route();
+refreshShared(); setInterval(refreshShared,8000);
 </script>
 
 </body>
